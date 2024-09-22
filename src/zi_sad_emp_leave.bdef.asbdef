@@ -1,0 +1,57 @@
+managed implementation in class ZBP_I_SAD_EMP_LEAVE unique;
+strict ( 2 );
+with draft;
+define behavior for ZI_SAD_EMP_LEAVE alias EmpLeave
+persistent table zsad_emp_leave
+draft table zsad_emp_leave_d
+etag master LastChangedAt
+lock master total etag LocalLastChangedAt
+authorization master ( global )
+
+{
+  field ( readonly )
+  EmpId,
+  LeaveId,
+  Status,
+  Remainingleave,
+  CreatedBy,
+  CreatedAt,
+  LastChangedBy,
+  LastChangedAt,
+  LocalLastChangedAt;
+
+  field ( numbering : managed )
+  EmpId,
+  LeaveId;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+
+  action SetToApproveLeave result [1] $self;
+  action SetToRejectLeave result [1] $self;
+  determination calcRemainingLeave on modify { field Enddate, Startdate; }
+
+  mapping for zsad_emp_leave
+    {
+      EmpId              = emp_id;
+      LeaveId            = leave_id;
+      Startdate          = startdate;
+      Enddate            = enddate;
+      Leavetype          = leavetype;
+      Status             = status;
+      Remainingleave     = remainingleave;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}

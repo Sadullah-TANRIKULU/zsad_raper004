@@ -1,0 +1,11 @@
+@EndUserText: {
+  label: 'Service Definition for ZC_SAD_EMP_LEAVE'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'ZC_SAD_EMP_LEAVE'
+  }
+}
+define service ZUI_SAD_EMP_LEAVE_O4 provider contracts odata_v4_ui {
+  expose ZC_SAD_EMP_LEAVE as EmpLeave;
+}
